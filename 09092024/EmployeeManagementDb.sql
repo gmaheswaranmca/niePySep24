@@ -34,5 +34,27 @@ INSERT INTO Person(first_name, last_name)
 VALUES('virat', 'kohli'), 
  ('suryakumar','yadav');
 
+-- to query virat kohli by id 
+SELECT * FROM Person WHERE id=3;
+
+-- to query virat by name 
+SELECT * FROM Person WHERE first_name='virat';
+-- to query all the persons
+SELECT * FROM Person;
+-- to query all the persons
+SELECT id, first_name, last_name FROM Person;
+
+INSERT INTO Person(first_name, last_name)
+VALUES('Maheswaran','G');
+
+-- to update Maheswaran lastname as 'Govindaraju'
+UPDATE Person 
+SET last_name='Govindaraju'
+WHERE id=5;
+
+DELETE FROM Person
+WHERE id=5;
+
+
 
 
