@@ -1,0 +1,97 @@
+Required Softwares
+
+
+https://youtu.be/B3s3WT-05H0
+
+Now lets download the installer files: (Installation we shall do after words)
+
+1st: Python
+Google Search: Download Python
+https://www.python.org/downloads/
+Click this button if your system has Windows OS
+Or, Click on the link with your OS
+
+The installer file is downloaded into Downloads folder.
+Now, from the Downloads folder, cut and paste the .msi file into
+newly created python folder
+C:\software\python
+
+2nd: VS Code
+Google Search: Download VS Code
+https://code.visualstudio.com/download
+
+Check the OS, before you click the link
+Again, cut and paste the downloaded installer .msi file from Downloads folder to newly created "vs_code" folder
+C:\software\vs_code
+
+3rd: git
+Google Search: Download Git
+https://git-scm.com/downloads
+Check the OS, before you click the link
+Again, cut and paste the downloaded installer .msi file from Downloads folder to newly created "git" folder
+
+4th: mysql
+NOTE: Here you need to be careful while downloading and later while installation also.
+Google Search: Download mysql
+https://www.mysql.com/downloads/
+Scroll down and click on: MySQL Community (GPL) Downloads »
+CLick on: MySQL Installer for Windows
+Click on: Windows (x86, 32-bit), MSI Installer 	8.0.39 	303.6M
+
+5th: notepad++
+NOTE: This App helps us to make quick notes. Later the Notes we can copy to MS-Word to apply Formatting.
+Google Search: Download Notepad++
+https://notepad-plus-plus.org/downloads/
+
+Repeat the step of cutting-pasting the installer file from Downloads to C:\software\notepad_pp
+
+
+Here are the steps (in each line) to install MySQL:
+	Choosing the setup File: (check box) Full -> Click Next
+	Installation: Click Execute -> Click Next
+	Product Configuration: Click Next
+	Type and Networking: Do not change the settings (remember the port number 3306) Click Next
+	Authentication Method: (No changes) Click Next
+	Accounts and Rolls: Add the Root Password as "root123" -> Click Next
+	Windows service: Click Next
+	Server File Permissions: Click Next
+	Apply Configurations: Click Execute -> Click Finish
+	Product Configuration: Click Next
+	MySQL Router Config: Click Finish
+	Product Configuration: Click Next
+	Connect to Server: Enter password and Click Check (Connection succeeded must appear)
+	Apply Configurations: Click Execute -> Click Finish
+	Product Configuration: Click Next
+	Installation Complete: MySQL shell and Workbench opens/runs
+
+Now follow these steps to create a new Repo:
+	Login to your github account
+	Click on + (right top corner)
+	Click Create New Repository
+	Give name to your new Repo: "pySep24"
+	Make it public Repo (by default it will be public)
+	Click the Checkbox "add readme file"
+	Click Create button
+
+Now follow these steps to create a new Personal Access Token(PAT)
+	Click on your profile Photo (Right Top corner) -> next page
+	Click Settings (Down in the list) -> next page
+	Sroll down and Click Developer Settings -> next page
+	Click PAT -> Click PAT classic -> next page
+	Click PAT -> Select Classic PAT
+	Click Create button
+	Copy the PAT and paste it in notepad++ file (No need to save the text file)
+
+Steps to Sync our Git Repo to our local machine:
+	Copy the URL of your git Repo
+	Add '@' symbol before 'github' in the URL
+	Add the PAT before the '@' in the modified URL
+	Now run the Command: git clone <URL with PAT>
+	You should get the Repo folder in your system/laptop
+	Copy the necessary files and folders into your Repo folder	
+	
+
+hese are the steps to:
+1. download and install MySQL and other Apps
+2. create new repo in github 
+3. Sync the github repo with local machine folder
