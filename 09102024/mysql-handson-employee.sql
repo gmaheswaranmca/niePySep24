@@ -105,3 +105,4 @@ CREATE TABLE IF NOT EXISTS assignments (
 );
 DESC assignments;
 SELECT * FROM assignments;
+-- 
