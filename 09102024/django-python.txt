@@ -1,0 +1,32 @@
+django 
+    - python web development framework 
+    - python package 
+    - CLI for developers 
+to query python installed or query python version 
+    $ python --version 
+to query pip installed or query pip version 
+    $ pip --version     
+to check django installed 
+    $ pip show django 
+to install django 
+    $ pip install django                ####
+to check django cli / django-admin 
+    $ django-admin -v 
+to get help of django-admin 
+    $ django-admin help 
+to check mysqlclient installed 
+    $ pip show mysqlclient              ####
+to install mysqlclient 
+    $ pip install mysqlclient 
+
+
+-- to create django project named "myproject"
+    $ django-admin startproject myproject 
+    $ cd myproject 
+    $ code .
+-- to create app named "employees" for myproject 
+    Let be inside the project folder.
+    $ python manage.py startapp employees
+-- to run the project 
+    $ python manage.py runserver 
+
