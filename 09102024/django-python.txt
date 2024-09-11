@@ -29,4 +29,86 @@ to install mysqlclient
     $ python manage.py startapp employees
 -- to run the project 
     $ python manage.py runserver 
+-- to prepare to migrate models to database 
+    $ python manage.py makemigrations
 
+
+--- myproject\myproject\settings.py ---
+INSTALLED_APPS = [
+    # ...
+    'employees'
+]
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'empapp',  # Your MySQL database name
+        'USER': 'root',
+        'PASSWORD': 'root123',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+
+
+-- myproject\employees\models.py ----
+from django.db import models
+
+
+# Create your models here.
+from django.db import models
+
+
+# Create your models here.
+class Department(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'[id={self.id},name={self.name}]'
+
+class Employee(models.Model):
+    name = models.CharField(max_length=255) 
+    department = models.ForeignKey(Department, on_delete=models.CASCADE) 
+    job_title = models.CharField(max_length=50)
+    salary = models.FloatField()
+    bonus = models.FloatField()
+
+    def __str__(self):
+        return f'[id={self.id}, name={self.name}, dept={self.department.name}, salary={self.salary}, bonus={self.bonus}]'
+
+---- Department model crud operations ------
+C:\...\myproject> python manage.py shell 
+>>> from employees.models import Department 
+>>> Department.objects.all() # to read all depts 
+>>> [dept for dept in Department.objects.all()] #convert querset as list 
+>>> it_dept = Department(name = 'IT') #create it_dept object 
+>>> it_dept.save()          #create row in database 
+>>> Department.objects.create(name='Support') #create row in database 
+>>> it_dept = Department.objects.get(id = 1) # read by id 
+>>> it_dept.name = 'Information Technology'
+>>> it_dept.save() #update the existing IT dept 
+>>> support_dept = Department.objects.get(id = 4)
+>>> support_dept.delete() #delete the support dept from table 
+
+dravid, rohit, kohli, dhoni
+>>> from employees.models import Employee
+>>> it_dept = Department.objects.get(id = 1)
+>>> emp_dravid = Employee(name='dravid',department=it_dept,job_title='programmer',salary=100000,bonus=2000)
+>>> emp_dravid.save()
+>>> Employee.objects.all() #read all employees 
+>>> emp_rohit = Employee(name='rohit',department=it_dept,job_title='Designer',salary=400000,bonus=1000)
+>>> emp_rohit.save()
+>>> emp_kohli = Employee(name='kohli',department=it_dept,job_title='Tester',salary=500000,bonus=800)
+>>> emp_kohli.save()
+>>> emp_dhoni = Employee(name='dhoni',department=it_dept,job_title='Analyst',salary=50000,bonus=10000)
+>>> emp_dhoni.save()
+>>> Employee.objects.all()
+
+>>> Employee.objects.filter(department__name='IT') #filter by department name 
+>>> Employee.objects.all().order_by('salary') #sort by salary 
+>>> from django.db.models import Avg
+>>> Employee.objects.all().aggregate(Avg('salary'))
+>>> from django.db.models import Sum
+>>> Employee.objects.all().aggregate(Sum('salary'))
+>>> Employee.objects.select_related('department').all()
