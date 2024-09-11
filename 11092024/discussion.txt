@@ -1,0 +1,8 @@
+HTML / CSS / Javascript 
+HTML is the language to markup the content of the web page 
+CSS is style language to make the web pages look and feel 
+Javascript makes the web pages dynamic in client side 
+
+Site:
+    Home, About Us, Services / Products, Careers, Contact Us 
+
