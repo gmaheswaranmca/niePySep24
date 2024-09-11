@@ -1,0 +1,398 @@
+Microsoft Windows [Version 10.0.21996.1]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\mywork\source\niePySep24>code .
+
+C:\mywork\source\niePySep24>dir
+ Volume in drive C is Windows
+ Volume Serial Number is E46F-BF8F
+
+ Directory of C:\mywork\source\niePySep24
+
+10-09-2024  15:05    <DIR>          .
+10-09-2024  09:03    <DIR>          ..
+09-09-2024  15:59    <DIR>          09092024
+10-09-2024  13:11    <DIR>          09102024
+10-09-2024  15:13    <DIR>          myproject
+09-09-2024  15:27                12 README.md
+               1 File(s)             12 bytes
+               5 Dir(s)  113,804,402,688 bytes free
+
+C:\mywork\source\niePySep24>cd myproject
+
+C:\mywork\source\niePySep24\myproject>code .
+
+C:\mywork\source\niePySep24\myproject>python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, employees, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying employees.0001_initial... OK
+  Applying sessions.0001_initial... OK
+
+C:\mywork\source\niePySep24\myproject>python manage.py shell
+Python 3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 8.21.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: 2 + 3
+Out[1]: 5
+
+In [2]: from employees.models import Department
+
+In [3]: Department.objects.all()
+Out[3]: <QuerySet []>
+
+In [4]: it_dept = Department(name='IT')
+
+In [5]: it_dept.save()
+
+In [6]: Department.objects.all()
+Out[6]: <QuerySet [<Department: Department object (1)>]>
+
+In [7]: Department.objects.all()
+Out[7]: <QuerySet [<Department: Department object (1)>]>
+
+In [8]: from employees.models import Department
+
+In [9]: Department.objects.all()
+Out[9]: <QuerySet [<Department: Department object (1)>]>
+
+In [10]: exit
+
+C:\mywork\source\niePySep24\myproject>python manage.py shell
+Python 3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 8.21.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from employees.models import Department
+
+In [2]: Department.objects.all()
+Out[2]: <QuerySet [<Department: [id=1,name=IT]>]>
+
+In [3]: analyst_dept = Department(name='Analyst')
+
+In [4]: analyst_dept.save()
+
+In [5]: Department.objects.all()
+Out[5]: <QuerySet [<Department: [id=1,name=IT]>, <Department: [id=2,name=Analyst]>]>
+
+In [6]: design_dept = Department(name='Design')
+
+In [7]: design_dept.save()
+
+In [8]: Department.objects.all()
+Out[8]: <QuerySet [<Department: [id=1,name=IT]>, <Department: [id=2,name=Analyst]>, <Department: [id=3,name=Design]>]>
+
+In [9]: deptRest = Department.objects.all()
+
+In [10]: deptRes = Department.objects.all()
+
+In [11]: deptRes
+Out[11]: <QuerySet [<Department: [id=1,name=IT]>, <Department: [id=2,name=Analyst]>, <Department: [id=3,name=Design]>]>
+
+In [12]: depts = [dept for dept in deptRes]
+
+In [13]: depts
+Out[13]:
+[<Department: [id=1,name=IT]>,
+ <Department: [id=2,name=Analyst]>,
+ <Department: [id=3,name=Design]>]
+
+In [14]: nums = [10,20,30]
+
+In [15]: sum = 0
+
+In [16]: for num in nums:
+    ...:     sum += num
+    ...:
+
+In [17]: sum
+Out[17]: 60
+
+In [18]: sum(nums)
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[18], line 1
+----> 1 sum(nums)
+
+TypeError: 'int' object is not callable
+
+In [19]: del sum
+
+In [20]: sum
+Out[20]: <function sum(iterable, /, start=0)>
+
+In [21]: sum(nums)
+Out[21]: 60
+
+In [22]: Department.objects.all()
+Out[22]: <QuerySet [<Department: [id=1,name=IT]>, <Department: [id=2,name=Analyst]>, <Department: [id=3,name=Design]>]>
+
+In [23]: it_dept = Department.objects.get(id=1)
+
+In [24]: it_dept
+Out[24]: <Department: [id=1,name=IT]>
+
+In [25]: it_dept = Department.objects.get(id=1)
+
+In [26]: it_dept.name = 'Information Technology'
+
+In [27]: it_dept.save()
+
+In [28]: Department.objects.all()
+Out[28]: <QuerySet [<Department: [id=1,name=Information Technology]>, <Department: [id=2,name=Analyst]>, <Department: [id=3,name=Design]>]>
+
+In [29]: Department.objects.create(name='Support')
+Out[29]: <Department: [id=4,name=Support]>
+
+In [30]: Department.objects.all()
+Out[30]: <QuerySet [<Department: [id=1,name=Information Technology]>, <Department: [id=2,name=Analyst]>, <Department: [id=3,name=Design]>, <Department: [id=4,name=Support]>]>
+
+In [31]: support_dept = Department.objects.get(id = 4)
+
+In [32]: support_dept
+Out[32]: <Department: [id=4,name=Support]>
+
+In [33]: support_dept.delete()
+Out[33]: (1, {'employees.Department': 1})
+
+In [34]: Department.objects.all()
+Out[34]: <QuerySet [<Department: [id=1,name=Information Technology]>, <Department: [id=2,name=Analyst]>, <Department: [id=3,name=Design]>]>
+
+In [35]: exit()
+
+C:\mywork\source\niePySep24\myproject>python manage.py shell
+Python 3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 8.21.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from employees.models import Employee, Department
+
+In [2]: it_dept = Department.objects.get(id = 1)
+
+In [3]: it_dept
+Out[3]: <Department: [id=1,name=Information Technology]>
+
+In [4]: emp_dravid = Employee(name='dravid',department=it_dept,job_title='programmer',salary=100000,bo
+   ...: nus=2000)
+
+In [5]: emp_dravid.save()
+
+In [6]: Employee.objects.all()
+Out[6]: <QuerySet [<Employee: [id=1, name=dravid, dept=Information Technology, salary=100000.0, bonus=2000.0]>]>
+
+In [7]: emp_rohit = Employee(name='rohit',department=it_dept,job_title='Designer',salary=400000,bonus=
+   ...: 1000)
+
+In [8]: emp_rohit.save()
+
+In [9]: Employee.objects.all()
+Out[9]: <QuerySet [<Employee: [id=1, name=dravid, dept=Information Technology, salary=100000.0, bonus=2000.0]>, <Employee: [id=2, name=rohit, dept=Information Technology, salary=400000.0, bonus=1000.0]>]>
+
+In [10]: emp_kohli = Employee(name='kohli',department=it_dept,job_title='Tester',salary=500000,bonus=8
+    ...: 00)
+
+In [11]: emp_kohli.save()
+
+In [12]: Employee.objects.all()
+Out[12]: <QuerySet [<Employee: [id=1, name=dravid, dept=Information Technology, salary=100000.0, bonus=2000.0]>, <Employee: [id=2, name=rohit, dept=Information Technology, salary=400000.0, bonus=1000.0]>, <Employee: [id=3, name=kohli, dept=Information Technology, salary=500000.0, bonus=800.0]>]>
+
+In [13]: emp_dhoni = Employee(name='dhoni',department=it_dept,job_title='Analyst',salary=50000,bonus=1
+    ...: 0000)
+
+In [14]: emp_dhoni.save()
+
+In [15]: Employee.objects.all()
+Out[15]: <QuerySet [<Employee: [id=1, name=dravid, dept=Information Technology, salary=100000.0, bonus=2000.0]>, <Employee: [id=2, name=rohit, dept=Information Technology, salary=400000.0, bonus=1000.0]>, <Employee: [id=3, name=kohli, dept=Information Technology, salary=500000.0, bonus=800.0]>, <Employee: [id=4, name=dhoni, dept=Information Technology, salary=50000.0, bonus=10000.0]>]>
+
+In [16]: emp = Employee.objects.get(id = 1)
+
+In [17]: emp.bonus = 3000
+
+In [18]: emp.save()
+
+In [19]: Employee.objects.all()
+Out[19]: <QuerySet [<Employee: [id=1, name=dravid, dept=Information Technology, salary=100000.0, bonus=3000.0]>, <Employee: [id=2, name=rohit, dept=Information Technology, salary=400000.0, bonus=1000.0]>, <Employee: [id=3, name=kohli, dept=Information Technology, salary=500000.0, bonus=800.0]>, <Employee: [id=4, name=dhoni, dept=Information Technology, salary=50000.0, bonus=10000.0]>]>
+
+In [20]: emp = Employee.objects.get(id = 1)
+
+In [21]: emp
+Out[21]: <Employee: [id=1, name=dravid, dept=Information Technology, salary=100000.0, bonus=3000.0]>
+
+In [22]: emp.delete()
+Out[22]: (1, {'employees.Employee': 1})
+
+In [23]: Employee.objects.all()
+Out[23]: <QuerySet [<Employee: [id=2, name=rohit, dept=Information Technology, salary=400000.0, bonus=1000.0]>, <Employee: [id=3, name=kohli, dept=Information Technology, salary=500000.0, bonus=800.0]>, <Employee: [id=4, name=dhoni, dept=Information Technology, salary=50000.0, bonus=10000.0]>]>
+
+In [24]: it_employees = Employee.objects.filter(dept__name='IT Department')
+    ...:         for emp in it_employees:
+    ...:             print(emp.name)
+  Cell In[24], line 2
+    for emp in it_employees:
+    ^
+IndentationError: unexpected indent
+
+
+In [25]: it_employees = Employee.objects.filter(dept__name='IT Department')
+    ...: for emp in it_employees:
+    ...:     print(emp.name)
+    ...:
+---------------------------------------------------------------------------
+FieldError                                Traceback (most recent call last)
+Cell In[25], line 1
+----> 1 it_employees = Employee.objects.filter(dept__name='IT Department')
+      2 for emp in it_employees:
+      3     print(emp.name)
+
+File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\manager.py:87, in BaseManager._get_queryset_methods.<locals>.create_method.<locals>.manager_method(self, *args, **kwargs)
+     85 @wraps(method)
+     86 def manager_method(self, *args, **kwargs):
+---> 87     return getattr(self.get_queryset(), name)(*args, **kwargs)
+
+File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py:1476, in QuerySet.filter(self, *args, **kwargs)
+   1471 """
+   1472 Return a new QuerySet instance with the args ANDed to the existing
+   1473 set.
+   1474 """
+   1475 self._not_support_combined_queries("filter")
+-> 1476 return self._filter_or_exclude(False, args, kwargs)
+
+File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py:1494, in QuerySet._filter_or_exclude(self, negate, args, kwargs)
+   1492     clone._deferred_filter = negate, args, kwargs
+   1493 else:
+-> 1494     clone._filter_or_exclude_inplace(negate, args, kwargs)
+   1495 return clone
+
+File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py:1501, in QuerySet._filter_or_exclude_inplace(self, negate, args, kwargs)
+   1499     self._query.add_q(~Q(*args, **kwargs))
+   1500 else:
+-> 1501     self._query.add_q(Q(*args, **kwargs))
+
+File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py:1609, in Query.add_q(self, q_object)
+   1600 # For join promotion this case is doing an AND for the added q_object
+   1601 # and existing conditions. So, any existing inner join forces the join
+   1602 # type to remain inner. Existing outer joins can however be demoted.
+   1603 # (Consider case where rel_a is LOUTER and rel_a__col=1 is added - if
+   1604 # rel_a doesn't produce any rows, then the whole condition must fail.
+   1605 # So, demotion is OK.
+   1606 existing_inner = {
+   1607     a for a in self.alias_map if self.alias_map[a].join_type == INNER
+   1608 }
+-> 1609 clause, _ = self._add_q(q_object, self.used_aliases)
+   1610 if clause:
+   1611     self.where.add(clause, AND)
+
+File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py:1641, in Query._add_q(self, q_object, used_aliases, branch_negated, current_negated, allow_joins, split_subq, check_filterable, summarize, update_join_types)
+   1637 joinpromoter = JoinPromoter(
+   1638     q_object.connector, len(q_object.children), current_negated
+   1639 )
+   1640 for child in q_object.children:
+-> 1641     child_clause, needed_inner = self.build_filter(
+   1642         child,
+   1643         can_reuse=used_aliases,
+   1644         branch_negated=branch_negated,
+   1645         current_negated=current_negated,
+   1646         allow_joins=allow_joins,
+   1647         split_subq=split_subq,
+   1648         check_filterable=check_filterable,
+   1649         summarize=summarize,
+   1650         update_join_types=update_join_types,
+   1651     )
+   1652     joinpromoter.add_votes(needed_inner)
+   1653     if child_clause:
+
+File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py:1491, in Query.build_filter(self, filter_expr, branch_negated, current_negated, can_reuse, allow_joins, split_subq, check_filterable, summarize, update_join_types)
+   1489 if not arg:
+   1490     raise FieldError("Cannot parse keyword query %r" % arg)
+-> 1491 lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+   1493 if check_filterable:
+   1494     self.check_filterable(reffed_expression)
+
+File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py:1303, in Query.solve_lookup_type(self, lookup, summarize)
+   1301             expression = Ref(annotation, expression)
+   1302         return expression_lookups, (), expression
+-> 1303 _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+   1304 field_parts = lookup_splitted[0 : len(lookup_splitted) - len(lookup_parts)]
+   1305 if len(lookup_parts) > 1 and not field_parts:
+
+File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py:1768, in Query.names_to_path(self, names, opts, allow_many, fail_on_missing)
+   1760     if pos == -1 or fail_on_missing:
+   1761         available = sorted(
+   1762             [
+   1763                 *get_field_names_from_opts(opts),
+   (...)
+   1766             ]
+   1767         )
+-> 1768         raise FieldError(
+   1769             "Cannot resolve keyword '%s' into field. "
+   1770             "Choices are: %s" % (name, ", ".join(available))
+   1771         )
+   1772     break
+   1773 # Check if we need any joins for concrete inheritance cases (the
+   1774 # field lives in parent, but we are currently in one of its
+   1775 # children)
+
+FieldError: Cannot resolve keyword 'dept' into field. Choices are: bonus, department, department_id, id, job_title, name, salary
+
+In [26]: it_employees = Employee.objects.filter(department__name='IT Department')
+    ...: for emp in it_employees:
+    ...:     print(emp.name)
+    ...:
+
+In [27]: it_employees
+Out[27]: <QuerySet []>
+
+In [28]: it_employees = Employee.objects.filter(department__name='IT')
+    ...: for emp in it_employees:
+    ...:     print(emp.name)
+    ...:
+
+In [29]: it_employees = Employee.objects.filter(department__name='IT')
+    ...: it_employees
+Out[29]: <QuerySet []>
+
+In [30]: Employee.objects.filter(department__name='Information Technology')
+Out[30]: <QuerySet [<Employee: [id=2, name=rohit, dept=Information Technology, salary=400000.0, bonus=1000.0]>, <Employee: [id=3, name=kohli, dept=Information Technology, salary=500000.0, bonus=800.0]>, <Employee: [id=4, name=dhoni, dept=Information Technology, salary=50000.0, bonus=10000.0]>]>
+
+In [31]: Employee.objects.all().order_by('salary')
+Out[31]: <QuerySet [<Employee: [id=4, name=dhoni, dept=Information Technology, salary=50000.0, bonus=10000.0]>, <Employee: [id=2, name=rohit, dept=Information Technology, salary=400000.0, bonus=1000.0]>, <Employee: [id=3, name=kohli, dept=Information Technology, salary=500000.0, bonus=800.0]>]>
+
+In [32]: Employee.objects.filter(salary=50000)
+Out[32]: <QuerySet [<Employee: [id=4, name=dhoni, dept=Information Technology, salary=50000.0, bonus=10000.0]>]>
+
+In [33]: from django.db.models import Avg
+
+In [34]: Employee.objects.all().aggregate(Avg('salary'))
+Out[34]: {'salary__avg': 316666.6666666667}
+
+In [35]: from django.db.models import Sum
+
+In [36]: Employee.objects.all().aggregate(Sum('salary'))
+Out[36]: {'salary__sum': 950000.0}
+
+In [37]: Employee.objects.all()
+Out[37]: <QuerySet [<Employee: [id=2, name=rohit, dept=Information Technology, salary=400000.0, bonus=1000.0]>, <Employee: [id=3, name=kohli, dept=Information Technology, salary=500000.0, bonus=800.0]>, <Employee: [id=4, name=dhoni, dept=Information Technology, salary=50000.0, bonus=10000.0]>]>
+
+In [38]: Employee.objects.select_related('department').all()
+Out[38]: <QuerySet [<Employee: [id=2, name=rohit, dept=Information Technology, salary=400000.0, bonus=1000.0]>, <Employee: [id=3, name=kohli, dept=Information Technology, salary=500000.0, bonus=800.0]>, <Employee: [id=4, name=dhoni, dept=Information Technology, salary=50000.0, bonus=10000.0]>]>
+
+In [39]: Employee.objects.select_related('department').all()Employee.objects.select_related('departmen
+    ...: t').all()
