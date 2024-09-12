@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
-
+from .models import Doctor ######
 # Create your views here.
 def list_of_doctors(request):
-    return render(request, 'list.html')
-    #doctors = Doctor.objects.all()
-    #code 
-    #connect to the template "list.html" takes "doctors" as param
+    doctors = Doctor.objects.all() ######
+    return render(request, 'list.html', {'doctors' : doctors}) ######
 
 def create_doctor(request):
     return render(request, 'form.html')

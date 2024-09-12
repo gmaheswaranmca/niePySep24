@@ -29,26 +29,28 @@
         </div>
       </nav>   
     <h3>Doctors List</h3>
-    <table width="75%" align="center" border="1" bordercolor="silver"
-        cellspacing="0" cellpadding="3">
+    <table class="table">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
                 <th>Specialization</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
+            {% for doctor in doctors %}
             <tr>
-                <td>1</td>
-                <td>Arjun</td>
-                <td>Heart Specialist</td>
+                <td>{{doctor.id}}</td>
+                <td>{{doctor.name}}</td>
+                <td>{{doctor.specialization}}</td>
+                <td>
+                    <a href="/doctors/edit/{{doctor.id}}" class="btn btn-warning">Edit</a>
+                    <a href="/doctors/delete/{{doctor.id}}" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
-            <tr></tr>
-                <td>2</td>
-                <td>Feroz</td>
-                <td>Eye Specialist</td>
-            </tr>
+            {% endfor %}
+            
             </tbody>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
