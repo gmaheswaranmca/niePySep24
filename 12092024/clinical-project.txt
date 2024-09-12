@@ -45,7 +45,7 @@ Router
     urls definitions 
 
 #1
-localhost:3000/doctors/
+http://localhost:8000/doctors/
     list of doctors 
 localhost:3000/doctors/create
     create new doctor 
@@ -109,5 +109,20 @@ def delete_doctor(request, id):
     #redirect list page 
 
 
+----------------Run Server-------------------
+$ python manage.py runserver 
 
-    
+Check in browser the below urls:
+
+1. http://localhost:8000/doctors/
+    We will have the doctors list page 
+2. http://localhost:8000/doctors/create/
+    We will have the doctor create page 
+3. http://localhost:8000/doctors/edit/1/
+    We will have the doctor edit page 
+   http://localhost:8000/doctors/edit/2/
+4. http://localhost:8000/doctors/delete/1/
+   We will delete the doctor and redirect to list page 
+   http://localhost:8000/doctors/delete/2/
+
+See that urls and their pages are working as expected.
