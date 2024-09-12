@@ -1,0 +1,93 @@
+1. Django Project : create ClinicalProject
+    $ django-admin startproject ClinicalProject
+   Django App: DoctorApp 
+    $ cd ClinicalProject
+    $ code .
+    $ python manage.py startapp DoctorApp
+   MySQL DB: clinical_project_db 
+   Model: 
+        Doctor {id, name, specialization, year_of_experience}
+
+--------------------\ClinicalProject\DoctorApp\models.py-----------------------
+#...
+class Doctor(models.Model):
+    name = models.CharField(max_length = 255)
+    specialization = models.CharField(max_length = 125)
+    year_of_experience = models.IntegerField()
+
+    def __str__(self):
+        return f'[id={self.id}, name={self.name}, specialization={self.specialization}, year_of_experience={self.year_of_experience}]'
+--------------------\ClinicalProject\ClinicalProject\settings.py-----------------------
+INSTALLED_APPS = [ 
+    #...,
+    'DoctorApp'
+]
+
+#...
+DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'clinical_project_db',  # Your MySQL database name
+            'USER': 'root',
+            'PASSWORD': 'root123',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
+
+
+================   Migrate =====================
+    $ python manage.py makemigrations
+    $ python manage.py migrate
+
+=================================================
+Router 
+    urls definitions 
+
+#1
+localhost:3000/doctors/
+    list of doctors 
+localhost:3000/doctors/create
+    create new doctor 
+localhost:3000/doctors/edit/<id>
+    edit new doctor 
+localhost:3000/doctors/delete/<id>
+
+Views 
+from .models import Doctor 
+
+def list_of_doctors(request):
+    doctors = Doctor.objects.all()
+    #code 
+    #connect to the template "list.html" takes "doctors" as param
+
+def create_doctor(request):
+    #GET method
+        #connect to the template "form.html" 
+    #POST method 
+        name 
+        specialization
+        year_of_experience
+        doctor = Doctor(name = name, specialization = specialization, year_of_experience = year_of_experience)
+        doctor.save()
+        #redirect list page 
+
+def edit_doctor(request, id):
+    #GET method
+        doctor = Doctor.objects.get(id = id)
+        #connect to the template "form.html" pass doctor as param  
+    #POST method 
+        doctor = Doctor.objects.get(id = id)
+        doctor.name =  
+        doctor.specialization
+        doctor.year_of_experience
+        doctor.save()
+        #redirect list page 
+        
+def delete_doctor(request, id):
+    doctor = Doctor.objects.get(id = id)
+    doctor.delete()
+    #redirect list page 
+
+
+    
