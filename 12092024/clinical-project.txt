@@ -67,7 +67,7 @@ urlpatterns = [
 ]
 
 ---------------------------\ClinicalProject\DoctorApp\views.py
------------------------Initial Views 
+-----------------------Initial Views----------------------- 
 from django.shortcuts import render, redirect
 
 # Create your views here.
