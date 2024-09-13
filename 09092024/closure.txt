@@ -1,3 +1,45 @@
+Django Project 
+    EmrProject 
+        EMR - Electronic Medical Record 
+    PatientApp 
+        Patient {id, name, disease, age}    
+    database: emr_project_db
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 https://tinyurl.com/nie-day4-fb
 
 https://tinyurl.com/nie-day4-test
