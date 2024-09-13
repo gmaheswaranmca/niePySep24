@@ -5,7 +5,9 @@
     $ code .
     $ python manage.py startapp DoctorApp
    MySQL DB: clinical_project_db 
-
+```
+CREATE DATABASE clinical_project_db;
+```
 --------------------------
 2. Define models 
 --------------------\ClinicalProject\DoctorApp\models.py-----------------------
@@ -33,6 +35,12 @@ DATABASES = {
             'PORT': '3306',
         }
     }
+
+
+
+================   Migrate =====================
+    $ python manage.py makemigrations
+    $ python manage.py migrate
 
 --------------------------
 3. Define urls.py 
@@ -315,3 +323,23 @@ list.html
 </body>
 </html>
 ```
+
+
+
+----------------Run Server-------------------
+$ python manage.py runserver 
+
+Check in browser the below urls:
+
+1. http://localhost:8000/doctors/
+    We will have the doctors list page 
+2. http://localhost:8000/doctors/create/
+    We will have the doctor create page 
+3. http://localhost:8000/doctors/edit/1/
+    We will have the doctor edit page 
+   http://localhost:8000/doctors/edit/2/
+4. http://localhost:8000/doctors/delete/1/
+   We will delete the doctor and redirect to list page 
+   http://localhost:8000/doctors/delete/2/
+
+See that urls and their pages are working as expected.
