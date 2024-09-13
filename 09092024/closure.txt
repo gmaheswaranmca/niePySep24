@@ -1,3 +1,8 @@
+https://tinyurl.com/nie-day5-fb
+
+https://tinyurl.com/nie-day5-test
+
+
 Django Project 
     EmrProject 
         EMR - Electronic Medical Record 
@@ -6,6 +11,10 @@ Django Project
     database: emr_project_db
 
 
+
+MTD NITHIN
+
+ADBUTHA.NITHIN
 
 
 

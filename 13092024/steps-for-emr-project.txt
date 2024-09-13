@@ -1,0 +1,345 @@
+1. Django Project : create EmrProject
+    $ django-admin startproject EmrProject
+   Django App: PatientApp 
+    $ cd EmrProject
+    $ code .
+    $ python manage.py startapp PatientApp
+   MySQL DB: emr_patient_db 
+```
+CREATE DATABASE emr_patient_db;
+```
+--------------------------
+2. Define models 
+--------------------\EmrProject\PatientApp\models.py-----------------------
+class Patient(models.Model):
+    name = models.CharField(max_length = 255)
+    disease = models.CharField(max_length = 125)
+    age = models.IntegerField()
+
+    def __str__(self):
+        return f'[id={self.id}, name={self.name}, disease={self.disease}, age={self.age}]'
+--------------------\EmrProject\EmrProject\settings.py-----------------------
+INSTALLED_APPS = [ 
+    #...,
+    'PatientApp'
+]
+
+#...
+DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'emr_patient_db',  # Your MySQL database name
+            'USER': 'root',
+            'PASSWORD': 'root123',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
+
+
+
+================   Migrate =====================
+    $ python manage.py makemigrations
+    $ python manage.py migrate
+
+--------------------------
+3. Define urls.py 
+----------------------------------------\EmrProject\EmrProject\urls.py----
+from django.contrib import admin
+from django.urls import path
+from PatientApp import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('doctors/', view=views.list_of_doctors, name='list_of_doctors'),
+    path('doctors/create/', view=views.create_doctor, name='create_doctor'),
+    path('doctors/edit/<id>/', view=views.edit_doctor, name='edit_doctor'),
+    path('doctors/delete/<id>/', view=views.delete_doctor, name='delete_doctor'),
+]
+
+
+--------------------------
+4. Defining views 
+---------------------------\EmrProject\PatientApp\views.py
+views.py
+```
+from django.shortcuts import render, redirect
+from .models import Patient ######
+# Create your views here.
+def list_of_doctors(request):
+    doctors = Patient.objects.all() ######
+    return render(request, 'list.html', {'doctors' : doctors}) ######
+
+def create_doctor(request):
+    if request.method == 'GET':
+        return render(request, 'create.html')
+    elif request.method == 'POST':
+        name = request.POST['name'] 
+        disease = request.POST['disease'] 
+        age = request.POST['age'] 
+        patient = Patient(name = name, disease = disease, age = age)
+        patient.save()
+        return redirect('list_of_doctors')         
+
+def edit_doctor(request, id):
+    if request.method == 'GET':
+        patient = Patient.objects.get(id = id)
+        return render(request, 'edit.html', {'patient' :patient})
+    elif request.method == 'POST':
+        patient = Patient.objects.get(id = id)
+        patient.name = request.POST['name'] 
+        patient.disease = request.POST['disease'] 
+        patient.age = request.POST['age'] 
+        patient.save()
+        return redirect('list_of_doctors')    
+
+        
+def delete_doctor(request, id):
+    patient = Patient.objects.get(id = id)
+    patient.delete()
+    return redirect('list_of_doctors')
+
+
+```
+
+--------------------------
+5. Defining Templates Pages 
+folder: \EmrProject\PatientApp\templates
+--------------------------
+
+create.html 
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMR Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/doctors/">EMR Project</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/doctors/">Patients List</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/doctors/create/">New Patient</a>
+              </li>
+            </ul>
+            <div class="d-flex" role="search">
+            </div>
+          </div>
+        </div>
+      </nav>   
+    <h3>Create Patient</h3>
+    <div class="container">
+        <form method="POST" onsubmit="return checkPatientForm();">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Patient Name:</label>
+                <input type="text" id="name" autofocus required
+                    class="form-control" name="name"/>
+            </div>
+            <div  class="form-group">
+                <label for="disease">Disease:</label>
+                <input type="text" id="disease"  required
+                class="form-control" name="disease"/>
+            </div>
+            <div class="form-group">
+                <label for="age">Year of Experience:</label>
+                <input type="number" id="age"  required
+                    min="0" max="40" class="form-control"  name="age"/>
+            </div>
+            <button type="submit" class="btn btn-success">Create Patient</button>
+            <button type="reset" class="btn btn-light">Clear Form</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      function checkPatientForm()
+      {
+        if(!confirm("Are you sure to create patient?"))
+        {
+          return false;     
+        }
+
+        return true;
+      }
+    </script>
+</body>
+</html>
+```
+
+
+edit.html 
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMR Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/doctors/">EMR Project</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/doctors/">Patients List</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/doctors/create/">New Patient</a>
+              </li>
+            </ul>
+            <div class="d-flex" role="search">
+            </div>
+          </div>
+        </div>
+      </nav>   
+    <h3>Edit Patient</h3>
+    <div class="container">
+        <form method="POST" onsubmit="return checkPatientForm();">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Patient Name:</label>
+                <input type="text" id="name" autofocus required
+                    class="form-control" name="name" value="{{patient.name}}"/>
+            </div>
+            <div  class="form-group">
+                <label for="disease">Disease:</label>
+                <input type="text" id="disease"  required
+                class="form-control" name="disease"  value="{{patient.disease}}"/>
+            </div>
+            <div class="form-group">
+                <label for="age">Year of Experience:</label>
+                <input type="number" id="age"  required
+                    min="0" max="40" class="form-control"  name="age"
+                    value="{{patient.age}}"/>
+            </div>
+            <button type="submit" class="btn btn-warning">Update Patient</button>
+            <button type="reset" class="btn btn-light">Clear Form</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      function checkPatientForm()
+      {
+        if(!confirm("Are you sure to edit patient?"))
+        {
+          return false;     
+        }
+
+        return true;
+      }
+    </script>
+</body>
+</html>
+```
+
+
+
+list.html 
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMR Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/doctors/">EMR Project</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/doctors/">Patients List</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/doctors/create/">New Patient</a>
+              </li>
+            </ul>
+            <div class="d-flex" role="search">
+            </div>
+          </div>
+        </div>
+      </nav>   
+    <h3>Patients List</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Disease</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in doctors %}
+            <tr>
+                <td>{{patient.id}}</td>
+                <td>{{patient.name}}</td>
+                <td>{{patient.disease}}</td>
+                <td>
+                    <a href="/doctors/edit/{{patient.id}}" class="btn btn-warning">Edit</a>
+                    <a href="/doctors/delete/{{patient.id}}" class="btn btn-danger" 
+                      onClick="return canDelete();">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            
+            </tbody>
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      function canDelete()
+      {
+        if(!confirm("Are you sure to delete patient?"))
+        {
+          return false;     
+        }
+
+        return true;
+      }
+    </script>
+</body>
+</html>
+```
+
+
+
+----------------Run Server-------------------
+$ python manage.py runserver 
+
+Check in browser the below urls:
+
+1. http://localhost:8000/doctors/
+    We will have the doctors list page 
+2. http://localhost:8000/doctors/create/
+    We will have the patient create page 
+3. http://localhost:8000/doctors/edit/1/
+    We will have the patient edit page 
+   http://localhost:8000/doctors/edit/2/
+4. http://localhost:8000/doctors/delete/1/
+   We will delete the patient and redirect to list page 
+   http://localhost:8000/doctors/delete/2/
+
+See that urls and their pages are working as expected.
